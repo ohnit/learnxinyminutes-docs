@@ -32,31 +32,32 @@ Go comes with a good standard library and a sizeable community.
 /* Multi-
  line comment */
 
- /* A build tag is a line comment starting with // +build
-  and can be executed by go build -tags="foo bar" command.
-  Build tags are placed before the package clause near or at the top of the file
+ /* A `build` tag is a line comment starting with `// +build`
+  and can be executed by calling `go build -tags="foo bar"`.
+
+  `build` tags are placed before the `package` clause near or at the top of the file
   followed by a blank line or other line comments. */
 // +build prod, dev, test
 
-// A package clause starts every source file.
-// main is a special name declaring an executable rather than a library.
+// A `package` clause starts every source file.
+// `main` is a special name declaring an executable rather than a library.
 package main
 
-// Import declaration declares library packages referenced in this file.
+// `import`  declares library packages referenced in this file.
 import (
 	"fmt"       // A package in the Go standard library.
 	"io/ioutil" // Implements some I/O utility functions.
-	m "math"    // Math library with local alias m.
+	m "math"    // Math library with local alias `m`.
 	"net/http"  // Yes, a web server!
 	"os"        // OS functions like working with the file system
 	"strconv"   // String conversions.
 )
 
-// A function definition. Main is special. It is the entry point for the
+// A function definition. `main` is special. It is the entry point for the
 // executable program. Love it or hate it, Go uses brace brackets.
 func main() {
-	// Println outputs a line to stdout.
-	// It comes from the package fmt.
+	// `Println` outputs a line to stdout.
+	// It comes from the package `fmt`.
 	fmt.Println("Hello world!")
 
 	// Call another function within this package.
@@ -125,25 +126,24 @@ can include line breaks.` // Same string type.
 	// Slices (as well as maps and channels) have reference semantics.
 	s3_cpy := s3            // Both variables point to the same instance.
 	s3_cpy[0] = 0           // Which means both are updated.
-	fmt.Println(s3_cpy[0] == s3[0]) // true	
+	fmt.Println(s3_cpy[0] == s3[0]) // true
 
 	// Because they are dynamic, slices can be appended to on-demand.
-	// To append elements to a slice, the built-in append() function is used.
+	// To append elements to a slice, the built-in `append()` function is used.
 	// First argument is a slice to which we are appending. Commonly,
 	// the array variable is updated in place, as in example below.
 	s := []int{1, 2, 3}		// Result is a slice of length 3.
 	s = append(s, 4, 5, 6)	// Added 3 elements. Slice now has length of 6.
 	fmt.Println(s) // Updated slice is now [1 2 3 4 5 6]
 
-	// To append another slice, instead of list of atomic elements we can
-	// pass a reference to a slice or a slice literal like this, with a
-	// trailing ellipsis, meaning take a slice and unpack its elements,
-	// appending them to slice s.
+  // A trailing ellipsis can be placed after a slice literal or reference to
+  // unpack its elements. Here were use it with `append` instead of a list of
+  // atomic elements
 	s = append(s, []int{7, 8, 9}...) // Second argument is a slice literal.
 	fmt.Println(s)	// Updated slice is now [1 2 3 4 5 6 7 8 9]
 
 	p, q := learnMemory() // Declares p, q to be type pointer to int.
-	fmt.Println(*p, *q)   // * follows a pointer. This prints two ints.
+	fmt.Println(*p, *q)   // `*` follows a pointer. This prints two ints.
 
 	// Maps are a dynamically growable associative array type, like the
 	// hash or dictionary types of some other languages.
@@ -160,14 +160,14 @@ can include line breaks.` // Same string type.
 	file, _ := os.Create("output.txt")
 	fmt.Fprint(file, "This is how you write to a file, by the way")
 	file.Close()
-	
+
 	// Output of course counts as using a variable.
 	fmt.Println(s, c, a4, s3, d2, m)
 
 	learnFlowControl() // Back in the flow.
 }
 
-// It is possible, unlike in many other languages for functions in go
+// It is possible (unlike in many other languages) for functions in Go
 // to have named return values.
 // Assigning a name to the type being returned in the function declaration line
 // allows us to easily return from multiple points in a function as well as to
@@ -179,7 +179,7 @@ func learnNamedReturns(x, y int) (z int) {
 
 // Go is fully garbage collected. It has pointers but no pointer arithmetic.
 // You can make a mistake with a nil pointer, but not by incrementing a pointer.
-// Unlike in C/Cpp taking and returning an address of a local variable is also safe. 
+// Unlike in C/Cpp, taking and returning an address of a local variable is also safe.
 func learnMemory() (p, q *int) {
 	// Named return values p and q have type pointer to int.
 	p = new(int) // Built-in function new allocates memory.
@@ -187,26 +187,26 @@ func learnMemory() (p, q *int) {
 	s := make([]int, 20) // Allocate 20 ints as a single block of memory.
 	s[3] = 7             // Assign one of them.
 	r := -2              // Declare another local variable.
-	return &s[3], &r     // & takes the address of an object.
+	return &s[3], &r     // `&` takes the address of an object.
 }
 
-// Use the aliased math library (see imports, above) 
+// Use the aliased math library (see imports, above)
 func expensiveComputation() float64 {
 	return m.Exp(10)
 }
 
 func learnFlowControl() {
-	// If statements require brace brackets, and do not require parentheses.
+	// `if` statements require brace brackets, and do not require parentheses.
 	if true {
 		fmt.Println("told ya")
 	}
-	// Formatting is standardized by the command line command "go fmt".
+	// Formatting is standardized by the command line command `go fmt`.
 	if false {
 		// Pout.
 	} else {
 		// Gloat.
 	}
-	// Use switch in preference to chained if statements.
+	// Use `switch` in preference to chained `if` statements.
 	x := 42.0
 	switch x {
 	case 0:
@@ -234,22 +234,23 @@ func learnFlowControl() {
 	default:
 		// all other cases
 	}
+	fmt.Println(c)
 
-	// Like if, for doesn't use parens either.
-	// Variables declared in for and if are local to their scope.
+	// Like `if`, `for` doesn't use parentheses either.
+	// Variables declared in `for` and `if` are local to their scope.
 	for x := 0; x < 3; x++ { // ++ is a statement.
 		fmt.Println("iteration", x)
 	}
 	// x == 42 here.
 
-	// For is the only loop statement in Go, but it has alternate forms.
+	// `for` is the only loop statement in Go, but it has alternate forms.
 	for { // Infinite loop.
 		break    // Just kidding.
 		continue // Unreached.
 	}
 
-	// You can use range to iterate over an array, a slice, a string, a map, or a channel.
-	// range returns one (channel) or two values (array, slice, string and map).
+	// You can use `range` to iterate over an array, a slice, a string, a map, or a channel.
+	// `range` returns one (channel) or two values (array, slice, string and map).
 	for key, value := range map[string]int{"one": 1, "two": 2, "three": 3} {
 		// for each pair in the map, print key and value
 		fmt.Printf("key=%s, value=%d\n", key, value)
@@ -259,7 +260,7 @@ func learnFlowControl() {
 		fmt.Printf("Hello, %s\n", name)
 	}
 
-	// As with for, := in an if statement means to declare and assign
+	// As with `for`, `:=` in an if statement means to declare and assign
 	// y first, then test y > x.
 	if y := expensiveComputation(); y > x {
 		x = y
@@ -275,7 +276,7 @@ func learnFlowControl() {
 
 	// What's more is function literals may be defined and called inline,
 	// acting as an argument to function, as long as:
-	// a) function literal is called immediately (),
+	// a) function literal is called immediately: `()`,
 	// b) result type matches expected type of argument.
 	fmt.Println("Add + double two numbers: ",
 		func(a, b int) int {
@@ -310,11 +311,11 @@ func sentenceFactory(mystring string) func(before, after string) string {
 }
 
 func learnDefer() (ok bool) {
-	// A defer statement pushes a function call onto a list. The list of saved
+	// A `defer` statement pushes a function call onto a list. The list of saved
 	// calls is executed AFTER the surrounding function returns.
 	defer fmt.Println("deferred statements execute in reverse (LIFO) order.")
 	defer fmt.Println("\nThis line is being printed first because")
-	// Defer is commonly used to close a file, so the function closing the
+	// `defer` is commonly used to close a file, so the function closing the
 	// file stays close to the function opening the file.
 	return true
 }
@@ -369,7 +370,7 @@ func learnVariadicParams(myStrings ...interface{}) {
 }
 
 func learnErrorHandling() {
-	// ", ok" idiom used to tell if something worked or not.
+	// `, ok` idiom used to tell if something worked or not.
 	m := map[int]string{3: "three", 4: "four"}
 	if x, ok := m[1]; !ok { // ok will be false because 1 is not in the map.
 		fmt.Println("no one there")
@@ -392,7 +393,7 @@ func inc(i int, c chan int) {
 
 // We'll use inc to increment some numbers concurrently.
 func learnConcurrency() {
-	// Same make function used earlier to make a slice. Make allocates and
+	// Same `make` function used earlier to make a slice. `make` allocates and
 	// initializes slices, maps, and channels.
 	c := make(chan int)
 	// Start three concurrent goroutines. Numbers will be incremented
@@ -409,7 +410,7 @@ func learnConcurrency() {
 	ccs := make(chan chan string) // A channel of string channels.
 	go func() { c <- 84 }()       // Start a new goroutine just to send a value.
 	go func() { cs <- "wordy" }() // Again, for cs this time.
-	// Select has syntax like a switch statement but each case involves
+	// `select` has syntax like a switch statement but each case involves
 	// a channel operation. It selects a case at random out of the cases
 	// that are ready to communicate.
 	select {
